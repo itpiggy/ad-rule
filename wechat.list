@@ -1,28 +1,33 @@
 # ###############################################################
-# WeChat Ads Block Rules - 微信广告屏蔽规则
+# WeChat Ads Block Rules - 微信广告屏蔽规则 (V2)
 #
 # Author: piggy
-# Last Updated: 2025-07-21 19:27:04
+# Last Updated: 2025-07-21 19:35:19
 #
-# 说明:
-# 主要通过屏蔽腾讯广告平台及微信内置的广告内容分发域名来实现。
-# 由于微信使用 mmtls 加密协议，URL-REGEX 规则无法生效，故采用域名规则。
+# 更新日志:
+# - 根据新日志，增加了针对 *short, *extshort, *long 等域名的规则。
+# - 使用 DOMAIN-KEYWORD 进行优化，以便更广泛地匹配不同地区的服务器。
 # ###############################################################
 
 [Rule]
 
 # --- 核心广告平台 (广点通) ---
-# 腾讯主要的广告服务平台，屏蔽此域名可以拦截大部分腾讯系 App 的广告。
+# 腾讯主要的广告服务平台，拦截效果显著。
 DOMAIN-SUFFIX, gdt.qq.com, REJECT-TINYGIF
 
 # --- 微信内置广告与内容分发域名 ---
-# 这些是微信 App 直接请求的广告或包含广告的内容域名。
+# 根据日志分析，这些域名用于加载朋友圈的视频、图片等广告物料。
 DOMAIN, ad.weixin.qq.com, REJECT-TINYGIF
-DOMAIN, adwx.gdt.qq.com, REJECT-TINYGIF
-
-# 屏蔽短视频流中的广告内容 (根据你的日志分析得出)
-# 使用 DOMAIN-KEYWORD 可以匹配不同区域的服务器，如 sz(深圳), sh(上海)等
-DOMAIN-KEYWORD, minorshort.weixin, REJECT-TINYGIF
-
-# --- 其他已知广告相关域名 ---
 DOMAIN-KEYWORD, ad-mm, REJECT-TINYGIF
+
+# --- 微信动态内容/CDN域名 (关键) ---
+# 拦截朋友圈信息流中的各种广告内容。
+# 使用 KEYWORD 可以匹配不同区域的服务器 (如 sz, bj, sh)。
+DOMAIN-KEYWORD, minorshort.weixin, REJECT-TINYGIF
+DOMAIN-KEYWORD, extshort.weixin, REJECT-TINYGIF
+DOMAIN-KEYWORD, szshort.weixin, REJECT-TINYGIF
+DOMAIN-KEYWORD, szlong.weixin, REJECT-TINYGIF
+
+# --- 其他已知 P2P 加速与数据上报域名 ---
+# 这些域名在你的日志中已被其他规则拦截，为保险起见明确加入。
+DOMAIN-SUFFIX, tencent-cloud.net, REJECT-TINYGIF
