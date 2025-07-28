@@ -1,95 +1,6 @@
-# Combined Ad Rules for itpiggy (Deduplicated, No Comments)
-# Last updated on: Mon Jul 28 09:09:48 UTC 2025
+# Combined Direct Rules for itpiggy (Deduplicated, No Comments)
+# Last updated on: Mon Jul 28 12:28:24 UTC 2025
 
-# 2024-04-02 17:30
-# 2025-04-13 21:00
-# 4K电影馆
-# 91Jav
-# AV Today
-# AVDB
-# AnFuns动漫
-# App 和附加内容 - 在安装和更新 App、使用某些 App 功能以及下载附加内容时，Apple 设备需要访问以下主机和域。
-# Apple
-# Apple 推送通知 - 当使用 Apple 推送通知服务 (APNS) 时，Apple 设备需要访问以下主机。
-# Apple账户 - Apple 设备必须能够连接到以下主机才能验证 Apple ID。所有使用 Apple ID 的服务（如 iCloud、App 安装和 Xcode）都需要满足这个条件。
-# Beta 版更新 - Apple 设备需要访问以下主机，才能注册以获取 Beta 版更新，并使用“反馈助理”App 来报告反馈。
-# CMSPlayer
-# DOMAIN-SUFFIX, cz01.tv
-# DOMAIN-SUFFIX, cz01.vip
-# DOMAIN-SUFFIX, cz233.com
-# DOMAIN-SUFFIX, czys.top
-# DOMAIN-SUFFIX, czzy.site
-# DOMAIN-SUFFIX, czzy.top
-# DOMAIN-SUFFIX, czzy.tv
-# DOMAIN-SUFFIX, czzy22.com
-# DOMAIN-SUFFIX, czzy66.com
-# DOMAIN-SUFFIX, czzy77.com
-# DOMAIN-SUFFIX, czzy88.com
-# DOMAIN-SUFFIX, ddrk.me
-# DOMAIN-SUFFIX, ddys.info
-# DOMAIN-SUFFIX, ddys.love
-# DOMAIN-SUFFIX, ddys.mov
-# DOMAIN-SUFFIX, ddys.pro
-# DOMAIN-SUFFIX, ddys.tv
-# DOMAIN-SUFFIX, zxzj.pro
-# DOMAIN-SUFFIX, zxzj.site
-# DOMAIN-SUFFIX, zxzja.com
-# DOMAIN-SUFFIX, zxzjhd.com
-# Hanime1.me
-# HoHoJ
-# JAVMove
-# Jable
-# KanAV
-# KoreaPornMovie
-# MissAV
-# PPP Porn
-# PandaTV
-# Pornhub
-# RuleCount：139339
-# SubJav
-# TMDB
-# TVDB
-# Taiav
-# TestFlight
-# TwiVideo
-# UpdateTime：2025-07-22 02:35:28
-# VOD AV源
-# VOD TV源
-# XPTV
-# https://kelee.one/Tool/Loon/Rule/iCloud.list
-# https://support.apple.com/zh-cn/101555
-# https://support.apple.com/zh-cn/102266
-# iCloud - 除了上面列出的 Apple ID 主机外，Apple 设备必须能够连接到以下域的主机才能使用 iCloud 服务。
-# xHamster
-# 两个BT
-# 低端影视
-# 关联域 - Apple 设备必须能够连接到以下主机，才能在 iOS 14、iPadOS 14 和 macOS Big Sur 及更高版本中使用关联域。关联域是通用链接的基础，通用链接功能允许在 App 中呈现内容，而不是在 App 的全部或部分网站中呈现内容。接力、轻 App 和单点登录扩展都使用关联域。
-# 其他
-# 厂长资源
-# 嗷呜
-# 在线之家
-# 小盘盘
-# 影视播放规则(代理)
-# 旺旺资源
-# 有爱爱
-# 桃花族
-# 欧乐影视
-# 海外看
-# 独播库
-# 玩偶姐姐
-# 网盘源
-# 美剧星球
-# 肉视频
-# 花都影视
-# 设备管理 - 已在 MDM 中注册的 Apple 设备需要访问以下主机和域。
-# 设备设置 - 在设置期间或者在安装、更新或恢复操作系统时，Apple 设备需要访问以下主机。
-# 软件更新 - 在安装、恢复和更新 iOS、iPadOS、macOS、watchOS 及 Apple tvOS 时，Apple 设备需要访问以下主机。
-# 运营商更新 - 蜂窝网络设备需要访问以下主机，才能安装运营商软件包更新。
-# 追光影视
-# 麻豆社
-# 黄色仓库
-#天翼资源
-404: Not Found
 DOMAIN, 041.bndmpsjx.com
 DOMAIN, 1-fss24-s0.streamhoster.com
 DOMAIN, 14033.live.streamtheworld.com
@@ -122,7 +33,7 @@ DOMAIN, app-analytics-services.com
 DOMAIN, app-measurement-cn.com
 DOMAIN, app-measurement.com
 DOMAIN, app-site-association.cdn-apple.com //通用链接的关联域
-DOMAIN, app-site-association.networking.apple//通用链接的关联域
+DOMAIN, app-site-association.networking.apple//通用链接的关联域404: Not Found# 影视播放规则(代理)
 DOMAIN, appldnld.apple.com //iOS、iPadOS 和 watchOS 更新
 DOMAIN, appldnld.apple.com //蜂窝网络运营商捆绑包更新
 DOMAIN, appldnld.apple.com.edgesuite.net //蜂窝网络运营商捆绑包更新
@@ -107534,7 +107445,7 @@ DOMAIN-SUFFIX, xp61.com
 DOMAIN-SUFFIX, xp811.com
 DOMAIN-SUFFIX, xp9365.com
 DOMAIN-SUFFIX, xp94.com
-DOMAIN-SUFFIX, xpanpan.site
+DOMAIN-SUFFIX, xpanpan.site# UpdateTime：2025-07-22 02:35:28
 DOMAIN-SUFFIX, xpaper.com
 DOMAIN-SUFFIX, xpaper.net
 DOMAIN-SUFFIX, xpccdn.com
@@ -119565,7 +119476,6 @@ DOMAIN-SUFFIX, zzzyy.com
 DOMAIN-SUFFIX, zzzyyy.com
 DOMAIN-SUFFIX, zzzzaaaa.com
 DOMAIN-SUFFIX, zzzzzz.me
-GEOIP, cn
 IP-ASN, 132203
 IP-CIDR, 0.0.0.0/32
 IP-CIDR, 1.0.1.0/24
@@ -139529,7 +139439,7 @@ IP-CIDR6, ::ffff:60.171.183.161/128
 IP-CIDR6, ::ffff:60.171.183.186/128
 IP-CIDR6, ::ffff:60.171.183.98/128
 IP-CIDR6, fc00::/7, no-resolve
-IP-CIDR6, fe80::/10, no-resolve
+IP-CIDR6, fe80::/10, no-resolveGEOIP, cn
 USER-AGENT, %E4%B8%AD%E5%9B%BD%E5%B7%A5%E5%95%86%E9%93%B6%E8%A1%8C*
 USER-AGENT, %E4%BA%AC%E4%B8%9C%E5%88%B0%E5%AE%B6*
 USER-AGENT, %E4%BC%81%E4%B8%9A%E5%BE%AE%E4%BF%A1*
