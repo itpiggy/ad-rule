@@ -39,7 +39,7 @@ jobs:
             echo "" >> $TEMP_FILE
           done
 
-          echo "# Combined Ad Rules for VickiPieter (Deduplicated)" > $OUTPUT_FILE
+          echo "# Combined Ad Rules for ${{ github.repository_owner }} (Deduplicated, No Comments)" > $OUTPUT_FILE
           echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
           echo "" >> $OUTPUT_FILE
           # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
@@ -70,7 +70,7 @@ jobs:
             echo "" >> $TEMP_FILE
           done
           
-          echo "# Combined Direct Rules for VickiPieter (Deduplicated)" > $OUTPUT_FILE
+          echo "# Combined Ad Rules for ${{ github.repository_owner }} (Deduplicated, No Comments)" > $OUTPUT_FILE
           echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
           echo "" >> $OUTPUT_FILE
           # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
