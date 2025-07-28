@@ -5,45 +5,54 @@ name: Auto Update Rules
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */12 * * *' # 每12个小时执行一次 UTC 0和12点各执行一次
+    - cron: '0 */12 * * *'
+
+# 新增：为工作流授予写入仓库内容的权限
+permissions:
+  contents: write
 
 # 定义工作任务
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      # 第一步：签出（Checkout）你的仓库代码，只需执行一次
+      # 第一步：签出（Checkout）你的仓库代码
       - name: Checkout repository
         uses: actions/checkout@v4
 
       # 第二步：处理第一个文件 (ad_rules.list)
-      - name: Fetch and Combine for ad_rules.list
+      - name: Fetch, Deduplicate for ad_rules.list
         run: |
           # --- ad_rules.list 的配置 ---
-          # 请将这里的链接替换成 ad_rules.list 需要合并的源规则
           SOURCES="https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/PCDN.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/MyBlockAds.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/RejectAd.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/AdRules.list"
           OUTPUT_FILE="ad_rules.list"
+          TEMP_FILE=$(mktemp)
           # --- 配置结束 ---
 
           echo "Starting update for $OUTPUT_FILE..."
-          echo "# Combined Ad Rules for VickiPieter" > $OUTPUT_FILE
-          echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
-          echo "" >> $OUTPUT_FILE
           for url in $SOURCES; do
             echo "Fetching from $url"
-            curl -sL "$url" >> $OUTPUT_FILE
-            echo "" >> $OUTPUT_FILE
+            curl -sL "$url" >> $TEMP_FILE
+            echo "" >> $TEMP_FILE
           done
-          echo "$OUTPUT_FILE updated successfully."
+
+          echo "# Combined Ad Rules for VickiPieter (Deduplicated)" > $OUTPUT_FILE
+          echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
+          echo "" >> $OUTPUT_FILE
+          # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
+          sort -u "$TEMP_FILE" | grep -v '^$' >> $OUTPUT_FILE
+          
+          echo "$OUTPUT_FILE updated successfully with deduplication."
+          # 删除临时文件
+          rm "$TEMP_FILE"
 
       # 第三步：处理第二个文件 (direct_rules.list)
-      - name: Fetch and Combine for direct_rules.list
+      - name: Fetch, Deduplicate for direct_rules.list
         run: |
           # --- direct_rules.list 的配置 ---
-          # 请将这里的链接替换成 direct_rules.list 需要合并的源规则
           SOURCES="https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Apple.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Media-Direct
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Media-Proxy.list
@@ -51,25 +60,31 @@ jobs:
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Lan
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/CN_REGION"
           OUTPUT_FILE="direct_rules.list"
+          TEMP_FILE=$(mktemp)
           # --- 配置结束 ---
 
           echo "Starting update for $OUTPUT_FILE..."
-          echo "# Combined Direct Rules for VickiPieter" > $OUTPUT_FILE
-          echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
-          echo "" >> $OUTPUT_FILE
           for url in $SOURCES; do
             echo "Fetching from $url"
-            curl -sL "$url" >> $OUTPUT_FILE
-            echo "" >> $OUTPUT_FILE
+            curl -sL "$url" >> $TEMP_FILE
+            echo "" >> $TEMP_FILE
           done
-          echo "$OUTPUT_FILE updated successfully."
+          
+          echo "# Combined Direct Rules for VickiPieter (Deduplicated)" > $OUTPUT_FILE
+          echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
+          echo "" >> $OUTPUT_FILE
+          # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
+          sort -u "$TEMP_FILE" | grep -v '^$' >> $OUTPUT_FILE
+
+          echo "$OUTPUT_FILE updated successfully with deduplication."
+          # 删除临时文件
+          rm "$TEMP_FILE"
 
       # 最后一步：提交所有发生变化的文件
       - name: Commit and Push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: Automatic rules update'
-          # 关键：指定所有可能被更新的文件，用空格隔开
+          commit_message: 'chore: Automatic rules update (deduplicated)'
           file_pattern: 'ad_rules.list direct_rules.list'
           commit_user_name: 'github-actions[bot]'
           commit_user_email: 'github-actions[bot]@users.noreply.github.com'
