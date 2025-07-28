@@ -7,7 +7,7 @@ on:
   schedule:
     - cron: '0 */12 * * *'
 
-# 新增：为工作流授予写入仓库内容的权限
+# 为工作流授予写入仓库内容的权限
 permissions:
   contents: write
 
@@ -21,38 +21,28 @@ jobs:
         uses: actions/checkout@v4
 
       # 第二步：处理第一个文件 (ad_rules.list)
-      - name: Fetch, Deduplicate for ad_rules.list
+      - name: Fetch, Filter, and Deduplicate for ad_rules.list
         run: |
-          # --- ad_rules.list 的配置 ---
           SOURCES="https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/PCDN.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/MyBlockAds.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/RejectAd.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/AdRules.list"
           OUTPUT_FILE="ad_rules.list"
           TEMP_FILE=$(mktemp)
-          # --- 配置结束 ---
 
-          echo "Starting update for $OUTPUT_FILE..."
-          for url in $SOURCES; do
-            echo "Fetching from $url"
-            curl -sL "$url" >> $TEMP_FILE
-            echo "" >> $TEMP_FILE
-          done
-
+          # 使用 ${{ github.repository_owner }} 自动获取用户名
           echo "# Combined Ad Rules for ${{ github.repository_owner }} (Deduplicated, No Comments)" > $OUTPUT_FILE
           echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
           echo "" >> $OUTPUT_FILE
-          # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
-          sort -u "$TEMP_FILE" | grep -v '^$' >> $OUTPUT_FILE
+
+          # 去重
+          curl -sL $SOURCES | grep -v -e '^#' -e '^$' | sort -u >> $OUTPUT_FILE
           
-          echo "$OUTPUT_FILE updated successfully with deduplication."
-          # 删除临时文件
-          rm "$TEMP_FILE"
+          echo "$OUTPUT_FILE updated successfully."
 
       # 第三步：处理第二个文件 (direct_rules.list)
-      - name: Fetch, Deduplicate for direct_rules.list
+      - name: Fetch, Filter, and Deduplicate for direct_rules.list
         run: |
-          # --- direct_rules.list 的配置 ---
           SOURCES="https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Apple.list
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Media-Direct
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/Media-Proxy.list
@@ -61,30 +51,22 @@ jobs:
                    https://raw.githubusercontent.com/sooyaaabo/Loon/main/Rule/CN_REGION"
           OUTPUT_FILE="direct_rules.list"
           TEMP_FILE=$(mktemp)
-          # --- 配置结束 ---
 
-          echo "Starting update for $OUTPUT_FILE..."
-          for url in $SOURCES; do
-            echo "Fetching from $url"
-            curl -sL "$url" >> $TEMP_FILE
-            echo "" >> $TEMP_FILE
-          done
-          
-          echo "# Combined Ad Rules for ${{ github.repository_owner }} (Deduplicated, No Comments)" > $OUTPUT_FILE
+          # 使用 ${{ github.repository_owner }} 自动获取用户名
+          echo "# Combined Direct Rules for ${{ github.repository_owner }} (Deduplicated, No Comments)" > $OUTPUT_FILE
           echo "# Last updated on: $(date -u)" >> $OUTPUT_FILE
           echo "" >> $OUTPUT_FILE
-          # 对临时文件进行排序、去重、过滤空行，然后追加到最终文件中
-          sort -u "$TEMP_FILE" | grep -v '^$' >> $OUTPUT_FILE
 
-          echo "$OUTPUT_FILE updated successfully with deduplication."
-          # 删除临时文件
-          rm "$TEMP_FILE"
+          # 去重
+          curl -sL $SOURCES | grep -v -e '^#' -e '^$' | sort -u >> $OUTPUT_FILE
+
+          echo "$OUTPUT_FILE updated successfully."
 
       # 最后一步：提交所有发生变化的文件
       - name: Commit and Push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: 'chore: Automatic rules update (deduplicated)'
+          commit_message: 'chore: Automatic rules update (filtered & deduplicated)'
           file_pattern: 'ad_rules.list direct_rules.list'
           commit_user_name: 'github-actions[bot]'
           commit_user_email: 'github-actions[bot]@users.noreply.github.com'
