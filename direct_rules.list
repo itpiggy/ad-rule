@@ -1,12 +1,4 @@
 # Combined Direct Rules for itpiggy (Deduplicated, No Comments)
-# Last updated on: Fri Sep  5 12:23:37 UTC 2025
+# Last updated on: Sat Sep  6 00:55:32 UTC 2025
 
-404: Not Found404: Not Found404: Not Found404: Not FoundIP-CIDR, 10.0.0.0/8, no-resolve
-IP-CIDR, 100.64.0.0/10, no-resolve
-IP-CIDR, 172.16.0.0/12, no-resolve
-IP-CIDR, 192.0.0.0/24, no-resolve
-IP-CIDR, 192.168.0.0/16, no-resolve
-IP-CIDR, 198.18.0.0/15, no-resolve
-IP-CIDR6, ::1/128, no-resolve
-IP-CIDR6, fc00::/7, no-resolve
-IP-CIDR6, fe80::/10, no-resolveGEOIP, cn
+404: Not Found404: Not Found404: Not Found404: Not Found404: Not Found404: Not Found
